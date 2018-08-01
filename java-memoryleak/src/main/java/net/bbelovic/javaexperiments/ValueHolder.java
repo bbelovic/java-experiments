@@ -12,7 +12,7 @@ public class ValueHolder<K, V> {
         return holderMap.size();
     }
 
-    public void put(K k, V v) {
+    void put(K k, V v) {
         holderMap.put(k, v);
     }
 

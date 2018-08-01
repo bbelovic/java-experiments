@@ -5,28 +5,32 @@ import java.util.concurrent.ScheduledExecutorService;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 
-public class App
+public class App<K, V>
 {
-    private ValueHolder<LeakingKey, Value> valueHolder = new ValueHolder<>();
+    private final ValueHolder<K, V> valueHolder;
     private final ScheduledExecutorService executorService;
 
-    private App(ScheduledExecutorService executorService) {
+    private App(ValueHolder<K, V> valueHolder, ScheduledExecutorService executorService) {
+        this.valueHolder = valueHolder;
         this.executorService = executorService;
     }
 
-    private void add() {
-        valueHolder.put(new LeakingKey(1), new Value(10_000));
+    private void add(K k, V v) {
+        valueHolder.put(k, v);
     }
 
-    private void schedule() {
+    private void schedule(Runnable action) {
         executorService.scheduleAtFixedRate(
-                this::add, 10, 5, SECONDS);
+                action, 10, 5, SECONDS);
     }
 
     public static void main( String[] args )
     {
         System.out.println("App started");
-        App app = new App(Executors.newScheduledThreadPool(1));
-        app.schedule();
+
+        var valueHolder = new ValueHolder<PlumbrLeakingKey, Value>();
+        var app = new App<>(valueHolder, Executors.newScheduledThreadPool(1));
+        Runnable r = () -> app.add(new PlumbrLeakingKey(1), new Value(10_000));
+        app.schedule(r);
     }
 }
