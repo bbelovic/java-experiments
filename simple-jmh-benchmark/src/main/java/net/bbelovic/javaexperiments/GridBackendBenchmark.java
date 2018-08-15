@@ -9,15 +9,15 @@ import org.openjdk.jmh.annotations.*;
 public class GridBackendBenchmark {
     private String input = "turn on 0,0 through 999,999";
 
-    private Puzzle<String, Long> vectorGridBackend = new Day6Puzzle<Grid<Boolean>>(new VectorGrid(1000, 1000),
-            new DefaultInstructionsParser<Grid<Boolean>>(LightOperation::valueOf));
+    private Puzzle<String, Long> vectorGridBackend = new Day6Puzzle<>(new VectorGrid(1_000_000, 1000),
+            new DefaultInstructionsParser<>(LightOperation::valueOf));
 
     private Puzzle<String, Long> matrixGridBackend =
-            new Day6Puzzle<Grid<Boolean>>(new MatrixGrid(1000, 1000),
-                    new DefaultInstructionsParser<Grid<Boolean>>(LightOperation::valueOf));
+            new Day6Puzzle<>(new MatrixGrid(1000, 1000),
+                    new DefaultInstructionsParser<>(LightOperation::valueOf));
 
-    private Puzzle<String, Long> bitGridBackend = new Day6Puzzle<Grid<Boolean>>(new BitGrid(1000, 1000),
-            new DefaultInstructionsParser<Grid<Boolean>>(LightOperation::valueOf));
+    private Puzzle<String, Long> bitGridBackend = new Day6Puzzle<>(new BitGrid(1_000_000, 1000),
+            new DefaultInstructionsParser<>(LightOperation::valueOf));
 
 
     @Benchmark
