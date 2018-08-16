@@ -5,7 +5,7 @@ import net.bbelovic.adventofcode.day6.*;
 import org.openjdk.jmh.annotations.*;
 
 @State(Scope.Thread)
-@BenchmarkMode(Mode.AverageTime)
+@BenchmarkMode(Mode.Throughput)
 public class GridBackendBenchmark {
     private String input = "turn on 0,0 through 999,999";
 
