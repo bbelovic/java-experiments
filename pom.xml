@@ -12,6 +12,7 @@
         <module>java-memoryleak</module>
         <module>simple-webapp</module>
         <module>simple-jmh-benchmark</module>
+        <module>simple-websocket</module>
     </modules>
 
     <name>java-experiments</name>
