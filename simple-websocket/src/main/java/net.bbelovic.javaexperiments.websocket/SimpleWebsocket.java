@@ -7,13 +7,14 @@ import java.io.IOException;
 import java.time.LocalTime;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicLong;
 
 import static java.time.format.DateTimeFormatter.ISO_LOCAL_TIME;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 @ServerEndpoint("/simple")
 public class SimpleWebsocket {
+    private static volatile AtomicLong cntId = new AtomicLong(0L);
     private final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
 
     @OnOpen
@@ -27,7 +28,7 @@ public class SimpleWebsocket {
                 e.printStackTrace();
             }
         };
+        System.out.println("Starting clock - " + (cntId.incrementAndGet()) );
         executorService.scheduleAtFixedRate(r, 0, 1, SECONDS);
-
     }
 }
