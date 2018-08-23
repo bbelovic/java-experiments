@@ -13,6 +13,7 @@
         <module>simple-webapp</module>
         <module>simple-jmh-benchmark</module>
         <module>simple-websocket</module>
+      <module>simple-websocket-client</module>
     </modules>
 
     <name>java-experiments</name>
