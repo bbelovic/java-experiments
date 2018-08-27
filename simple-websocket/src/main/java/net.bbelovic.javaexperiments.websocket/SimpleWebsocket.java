@@ -23,6 +23,7 @@ public class SimpleWebsocket {
     @OnOpen
     public void startClock(Session session) {
         final var id = cntId.incrementAndGet();
+        System.out.println(String.format("Client %d connected", id));
         Runnable r = () -> {
             LocalTime now = LocalTime.now();
             var clientId = "Client-" + id;
