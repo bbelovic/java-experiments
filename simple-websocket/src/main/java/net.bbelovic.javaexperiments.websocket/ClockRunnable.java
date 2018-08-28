@@ -16,17 +16,14 @@ public class ClockRunnable implements Runnable {
     @Override
     public void run() {
         while (!Thread.currentThread().isInterrupted()) {
-            System.out.println("interrupted="+Thread.currentThread().isInterrupted());
             LocalTime now = LocalTime.now();
             var formatted = DateTimeFormatter.ISO_TIME.format(now);
             try {
                 session.getBasicRemote().sendText(clientId + ":" + formatted);
                 Thread.sleep(1000L);
             } catch (Exception e) {
-                System.out.println("ex interrupted="+Thread.currentThread().isInterrupted());
                 e.printStackTrace();
                 Thread.currentThread().interrupt();
-                System.out.println("ex2 interrupted="+Thread.currentThread().isInterrupted());
             }
         }
 

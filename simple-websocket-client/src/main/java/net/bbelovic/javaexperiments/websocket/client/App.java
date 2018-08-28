@@ -17,12 +17,15 @@ public class App
             @Override
             public void onOpen(WebSocket webSocket) {
                 System.out.println("connected");
+                WebSocket.Listener.super.onOpen(webSocket);
             }
 
             @Override
             public CompletionStage<?> onText(WebSocket webSocket, CharSequence data, boolean last) {
                 StringBuilder sb = new StringBuilder(data);
+//                webSocket.request(1);
                 System.out.println("data=" + sb.toString() + ", last=" + last);
+                WebSocket.Listener.super.onText(webSocket, data, last);
 
                 return null;
             }
@@ -30,7 +33,10 @@ public class App
 
         CompletableFuture<WebSocket> websocket = httpClient.newWebSocketBuilder().buildAsync(uri, listener);
         WebSocket webSocket = websocket.join();
-//        webSocket.sendText("", true);
+        while (!webSocket.isInputClosed()) {
+            Thread.sleep(1000);
+        }
+        webSocket.sendText("xxx", false).thenRun(()-> System.out.println("after text"));
 
 
     }

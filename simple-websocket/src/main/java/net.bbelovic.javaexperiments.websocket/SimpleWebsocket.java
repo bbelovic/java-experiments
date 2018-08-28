@@ -1,5 +1,6 @@
 package net.bbelovic.javaexperiments.websocket;
 
+import javax.websocket.OnError;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
@@ -42,5 +43,12 @@ public class SimpleWebsocket {
             this.thread.interrupt();
             System.out.println("Stopped..");
         }
+    }
+
+    @OnError
+    public void onError(Throwable t) {
+        System.out.println("Error in websocket.");
+        t.printStackTrace();
+
     }
 }
