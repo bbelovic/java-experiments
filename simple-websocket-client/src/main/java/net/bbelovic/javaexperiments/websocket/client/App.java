@@ -31,8 +31,15 @@ public class App
         };
 
         CompletableFuture<WebSocket> ws = httpClient.newWebSocketBuilder().buildAsync(uri, listener);
-        ws.thenApply(webSocket -> webSocket.sendText("xxx", true))
-                .
+
+
+        WebSocket webSocket = ws.join();
+
+        while (!webSocket.isInputClosed()) {
+            webSocket.sendText("xxx", false)
+                    .thenAccept(w -> w.sendText("xxx2", true));
+            Thread.sleep(100);
+        }
 //        WebSocket webSocket = websocket.join();
 //        while (!webSocket.isInputClosed()) {
 //            Thread.sleep(1000);

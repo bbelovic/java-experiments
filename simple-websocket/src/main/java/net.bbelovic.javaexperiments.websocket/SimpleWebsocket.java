@@ -42,6 +42,8 @@ public class SimpleWebsocket {
         if ("stop".equals(message)) {
             this.thread.interrupt();
             System.out.println("Stopped..");
+        } else {
+            System.out.println("Received: " + message);
         }
     }
 
