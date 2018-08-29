@@ -23,20 +23,21 @@ public class App
             @Override
             public CompletionStage<?> onText(WebSocket webSocket, CharSequence data, boolean last) {
                 StringBuilder sb = new StringBuilder(data);
-//                webSocket.request(1);
-                System.out.println("data=" + sb.toString() + ", last=" + last);
-                WebSocket.Listener.super.onText(webSocket, data, last);
+                webSocket.request(1);
 
-                return null;
+                return CompletableFuture.completedFuture(data)
+                        .thenAccept(System.out::println);
             }
         };
 
-        CompletableFuture<WebSocket> websocket = httpClient.newWebSocketBuilder().buildAsync(uri, listener);
-        WebSocket webSocket = websocket.join();
-        while (!webSocket.isInputClosed()) {
-            Thread.sleep(1000);
-        }
-        webSocket.sendText("xxx", false).thenRun(()-> System.out.println("after text"));
+        CompletableFuture<WebSocket> ws = httpClient.newWebSocketBuilder().buildAsync(uri, listener);
+        ws.thenApply(webSocket -> webSocket.sendText("xxx", true))
+                .
+//        WebSocket webSocket = websocket.join();
+//        while (!webSocket.isInputClosed()) {
+//            Thread.sleep(1000);
+//        }
+//        webSocket.sendText("xxx", false).thenRun(()-> System.out.println("after text"));
 
 
     }
