@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 @ServerEndpoint("/simple")
 public class SimpleWebsocket {
-    private static volatile AtomicLong cntId = new AtomicLong(0L);
+    private static AtomicLong cntId = new AtomicLong(0L);
     private volatile boolean running;
     private Thread thread;
 
